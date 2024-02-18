@@ -48,7 +48,7 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PantallaGenerarQR()),
+                          builder: (context) => const PantallaGenerarQr()),
                     );
                   },
                   icon: const Icon(
@@ -65,7 +65,7 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 50,
+                      horizontal: 20,
                       vertical: 10,
                     ),
                   ),

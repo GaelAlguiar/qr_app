@@ -28,10 +28,10 @@ class PantallaMenu extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.50,
               ),
               const SizedBox(
-                height: 110,
+                height: 50,
               ),
               const Text(
-                'Bienvenido Administrador',
+                'Bienvenido',
                 style: TextStyle(
                   fontSize: 23.0,
                   color: Color.fromARGB(255, 163, 163, 163),
