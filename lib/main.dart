@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:qr_app/admin/model/salon_model.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_menu.dart';
 
 void main() {
@@ -10,15 +12,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Qr App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 64, 183, 58)),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (context) => SalonModel(),
+      child: MaterialApp(
+        title: 'Qr App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 64, 183, 58)),
+          useMaterial3: true,
+        ),
+        home: const PantallaMenu(),
       ),
-      home: const PantallaMenu(),
     );
   }
 }

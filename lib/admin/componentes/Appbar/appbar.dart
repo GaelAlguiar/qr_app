@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -13,24 +14,30 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 13, 102, 21),
       centerTitle: false,
+      iconTheme: const IconThemeData(
+        color: Colors.white,
+      ),
       title: Container(
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(1),
         child: Text(
           title,
-          style: const TextStyle(
-            fontSize: 21.0,
-            color: Color.fromARGB(255, 255, 255, 255),
+          style: GoogleFonts.robotoCondensed(
+            fontSize: 25.0,
+            color: const Color.fromARGB(255, 255, 255, 255),
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
       actions: [
-        IconButton(
-          icon: Image.asset(
-            'assets/images/logos/logoFime.png',
-            height: 50,
+        Padding(
+          padding: const EdgeInsets.only(right: 15.0),
+          child: IconButton(
+            icon: Image.asset(
+              'assets/images/logos/logoFime.png',
+              height: 50,
+            ),
+            onPressed: () {},
           ),
-          onPressed: () {},
         ),
       ],
     );

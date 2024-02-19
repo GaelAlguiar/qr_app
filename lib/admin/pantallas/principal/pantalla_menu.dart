@@ -13,11 +13,12 @@ class PantallaMenu extends StatelessWidget {
       appBar: const CustomAppBar(title: "Menú Principal"),
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.85,
+          height: MediaQuery.of(context).size.height * 0.8,
           width: MediaQuery.of(context).size.width * 0.9,
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(15),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
