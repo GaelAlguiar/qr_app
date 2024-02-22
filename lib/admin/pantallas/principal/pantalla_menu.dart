@@ -48,7 +48,7 @@ class PantallaMenu extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PantallaEscaneoQR(),
+                      builder: (context) => const PantallaEscaneoQr(),
                     ),
                   );
                 },

@@ -6,7 +6,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qr_app/admin/model/salon_model.dart';
 
 class PantallaGenerarQr extends StatefulWidget {
-  const PantallaGenerarQr({Key? key}) : super(key: key);
+  const PantallaGenerarQr({super.key});
 
   @override
   State<PantallaGenerarQr> createState() => _PantallaGenerarQrState();
