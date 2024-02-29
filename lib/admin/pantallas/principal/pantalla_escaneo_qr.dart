@@ -4,7 +4,7 @@ import 'package:qr_app/admin/pantallas/principal/pantalla_resultados_qr/pantalla
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class PantallaEscaneoQr extends StatefulWidget {
-  const PantallaEscaneoQr({Key? key}) : super(key: key);
+  const PantallaEscaneoQr({super.key});
 
   @override
   State<PantallaEscaneoQr> createState() => PantallaEscaneoQrState();

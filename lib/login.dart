@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qr_app/admin/pantallas/principal/pantalla_escaneo_qr.dart';
-import 'package:qr_app/admin/pantallas/principal/pantalla_cursos.dart';
-import 'package:qr_app/admin/pantallas/principal/pantalla_codigos.dart';
 import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_menu.dart';
 
@@ -14,7 +11,7 @@ class PantallaLogin extends StatelessWidget {
       appBar: const CustomAppBar(title: "Inicio de sesión"),
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.7,
+          height: MediaQuery.of(context).size.height * 0.5,
           width: MediaQuery.of(context).size.width * 0.9,
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
@@ -25,7 +22,7 @@ class PantallaLogin extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-               Row(
+              Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -47,21 +44,21 @@ class PantallaLogin extends StatelessWidget {
                   ),
                 ],
               ),
-
               const SizedBox(
                 height: 30,
               ),
               const TextField(
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Matricula',
                   border: OutlineInputBorder(),
                 ),
               ),
-
               const SizedBox(
                 height: 20,
               ),
               const TextField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: 'Contraseña',
                   border: OutlineInputBorder(),

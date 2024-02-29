@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
-import 'package:qr_app/admin/styles/pantallas/principal/styles.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qr_app/admin/model/salon_model.dart';
+import 'package:qr_app/admin/styles/pantallas/principal/styles.dart';
+import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
 
 class PantallaGenerarQr extends StatefulWidget {
   const PantallaGenerarQr({super.key});
@@ -22,7 +22,6 @@ class _PantallaGenerarQrState extends State<PantallaGenerarQr> {
 
   @override
   Widget build(BuildContext context) {
-    // Obtener la lista de números de salón del modelo
     List salonNumbers =
         context.read<SalonModel>().salonItems.map((salon) => salon[0]).toList();
 
@@ -95,63 +94,106 @@ class _PantallaGenerarQrState extends State<PantallaGenerarQr> {
                 const SizedBox(
                   height: 80,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RawMaterialButton(
-                      onPressed: () {
-                        // Validar que el número ingresado esté en la lista de números de salón
-                        int salonNumber =
-                            int.tryParse(_textoControlador.text) ?? 0;
-                        if (salonNumbers.contains(salonNumber)) {
-                          setState(() {
-                            data = _textoControlador.text;
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RawMaterialButton(
+                        onPressed: () {
+                          int salonNumber =
+                              int.tryParse(_textoControlador.text) ?? 0;
+                          if (salonNumbers.contains(salonNumber)) {
+                            setState(() {
+                              data = _textoControlador.text;
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text('Generado exitosamente'),
+                                backgroundColor:
+                                    Color.fromARGB(255, 42, 189, 23),
+                              ));
+                            });
+                          } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
-                              content: Text('Generado exitosamente'),
+                              content: Text('Número de salón inválido'),
+                              backgroundColor: Color.fromARGB(255, 189, 34, 23),
+                            ));
+                          }
+                        },
+                        fillColor: AppColors.primaryColor,
+                        shape: const StadiumBorder(),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 19,
+                          vertical: 15,
+                        ),
+                        child: const Row(
+                          children: [
+                            Icon(
+                              Icons.qr_code_2,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              'Generar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      RawMaterialButton(
+                        onPressed: () {
+                          int salonNumber =
+                              int.tryParse(_textoControlador.text) ?? 0;
+                          if (salonNumber != 0) {
+                            context
+                                .read<SalonModel>()
+                                .addItemToList(salonNumber);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('Salón añadido exitosamente'),
                               backgroundColor: Color.fromARGB(255, 42, 189, 23),
                             ));
-                          });
-                        } else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text('Número de salón inválido'),
-                            backgroundColor: Color.fromARGB(255, 189, 34, 23),
-                          ));
-                        }
-                      },
-                      fillColor: AppColors.primaryColor,
-                      shape: const StadiumBorder(),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 36,
-                        vertical: 13,
-                      ),
-                      child: const Text(
-                        'Generar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('Número de salón inválido'),
+                              backgroundColor: Color.fromARGB(255, 189, 34, 23),
+                            ));
+                          }
+                        },
+                        fillColor: AppColors.primaryColor,
+                        shape: const StadiumBorder(),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 15,
+                        ),
+                        child: const Row(
+                          children: [
+                            Icon(
+                              Icons.folder_copy_rounded,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              'Añadir',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 15),
-                    RawMaterialButton(
-                      onPressed: () {},
-                      fillColor: AppColors.primaryColor,
-                      shape: const StadiumBorder(),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 36,
-                        vertical: 13,
-                      ),
-                      child: const Text(
-                        'Exportar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ],
+                      const SizedBox(width: 15),
+                    ],
+                  ),
                 ),
               ],
             ),
