@@ -130,7 +130,7 @@ class _PantallaGenerarQrState extends State<PantallaGenerarQr> {
                         child: const Row(
                           children: [
                             Icon(
-                              Icons.qr_code_2,
+                              Icons.qr_code_2_sharp,
                               color: Colors.white,
                             ),
                             SizedBox(width: 5),
@@ -177,7 +177,7 @@ class _PantallaGenerarQrState extends State<PantallaGenerarQr> {
                         child: const Row(
                           children: [
                             Icon(
-                              Icons.folder_copy_rounded,
+                              Icons.folder_copy_sharp,
                               color: Colors.white,
                             ),
                             SizedBox(width: 5),

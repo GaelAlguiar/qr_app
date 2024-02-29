@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_generar_qr.dart';
 import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
-
 import 'package:qr_app/admin/model/salon_model.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_info_salon.dart';
 
@@ -84,7 +83,10 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const InfoSalon(),
+                                  builder: (context) => InfoSalon(
+                                    salonNumber: salonModel.listaSalones[index]
+                                        [0],
+                                  ),
                                 ),
                               );
                             },
