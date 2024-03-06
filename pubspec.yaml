@@ -2,12 +2,10 @@ name: qr_app
 description:
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-
 version: 1.0.0+1
 
 environment:
   sdk: ">=3.2.6 <4.0.0"
-
 
 dependencies:
   sqflite: ^2.3.2
@@ -16,22 +14,21 @@ dependencies:
   qr_flutter: ^4.1.0
   path_provider: ^2.1.1
 
-
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
   provider: ^6.1.1
   qr_code_scanner: ^1.0.1
+  hive: ^2.2.3
+  go_router: ^6.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
   flutter_lints: ^2.0.0
-
+  hive_generator: any
 
 flutter:
-
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
@@ -39,3 +36,4 @@ flutter:
     - assets/images/logos/logoFime.png
     - assets/images/logos/logoQR.png
     - assets/images/logos/logoClases.png
+    - assets/images/logos/logoFimePNG.png

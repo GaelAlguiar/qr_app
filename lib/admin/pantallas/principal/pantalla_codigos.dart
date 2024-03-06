@@ -6,7 +6,7 @@ import 'package:qr_app/admin/model/salon_model.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_info_salon.dart';
 
 class PantallaCodigos extends StatefulWidget {
-  const PantallaCodigos({Key? key}) : super(key: key);
+  const PantallaCodigos({super.key});
 
   @override
   State<PantallaCodigos> createState() => _PantallaCodigosState();

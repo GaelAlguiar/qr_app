@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class SalonModel extends ChangeNotifier {
   final List _salonItems = const [
     // [ Edificio, Piso, Color, StringQr ]
-    [4205, 3, Color.fromARGB(255, 68, 172, 72), ''],
-    [2305, 2, Color.fromARGB(255, 72, 121, 121), ''],
+    [4205, 3, Colors.green, ''],
+    [2305, 2, Colors.brown, ''],
   ];
 
   final List _listaSalones = [];
