@@ -149,7 +149,7 @@ class PantallaMenu extends StatelessWidget {
                     Icon(Icons.class_outlined),
                     SizedBox(width: 10),
                     Text(
-                      'Usuarios',
+                      'Salir',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
