@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_escaneo_qr.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_cursos.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_codigos.dart';
+import 'package:qr_app/admin/pantallas/principal/pantalla_usuarios.dart';
 import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
+
+import 'package:qr_app/utils/login_google_utils.dart';
 
 class PantallaMenu extends StatelessWidget {
   const PantallaMenu({super.key});
@@ -29,7 +32,7 @@ class PantallaMenu extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.50,
               ),
               const SizedBox(
-                height: 50,
+                height: 10,
               ),
               const Text(
                 'Bienvenido',
@@ -108,6 +111,45 @@ class PantallaMenu extends StatelessWidget {
                     SizedBox(width: 10),
                     Text(
                       'Mis cursos',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              //Usuarios
+              ElevatedButton(
+                onPressed: () async {
+                  try{
+                    await LoginGoogleUtils().singOutWithEmail();
+                    if (context.mounted) {
+                      Future.delayed(Duration.zero, () {
+                        Navigator.pop(context);
+                      });
+
+                    }
+                  }
+                  catch (e)
+                  {
+                    debugPrint("$e");
+                  }
+                  /*Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PantallaUsuarios(),
+                    ),
+                  );*/
+                },
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.class_outlined),
+                    SizedBox(width: 10),
+                    Text(
+                      'Usuarios',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
