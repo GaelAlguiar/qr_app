@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_escaneo_qr.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_cursos.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_codigos.dart';
-import 'package:qr_app/admin/pantallas/principal/pantalla_usuarios.dart';
-import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
+import 'package:qr_app/utils/login_google_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:qr_app/login.dart';
 
 import 'package:qr_app/utils/login_google_utils.dart';
 
@@ -13,7 +14,26 @@ class PantallaMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Menú Principal"),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text("Menú Principal", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await LoginGoogleUtils().signOutGoogle().then(
+                      (value) => LoginGoogleUtils().singOutWithEmail().then(
+                          (value) => Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PantallaLogin(),
+                              ),(route) => false),
+                      ),
+              );
+            },
+            icon: const Icon(Icons.exit_to_app, color: Colors.white),
+          ),
+        ],
+      ),
       body: Center(
         child: Container(
           height: MediaQuery.of(context).size.height * 0.8,

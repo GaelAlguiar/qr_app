@@ -33,6 +33,7 @@ class LoginGoogleUtils {
   //singOut with Email
   Future<void> singOutWithEmail() async {
     await FirebaseAuth.instance.signOut();
+
   }
 
   //signIn Google

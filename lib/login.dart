@@ -139,8 +139,6 @@ class PantallaLogin extends StatelessWidget
                     }
                   }*/
 
-
-
                   UserCredential? credentials = await LoginGoogleUtils().loginUserWithEmail(username.text, password.text);
                   if (credentials.user != null)
                   {
