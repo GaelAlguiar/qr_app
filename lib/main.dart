@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_app/admin/model/salon_model.dart';
-import 'package:qr_app/login.dart';
+import 'package:qr_app/global_screens/login.dart';
 //Importaciones de firebase
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_generar_qr.dart';
@@ -13,6 +14,7 @@ class PantallaCodigos extends StatefulWidget {
 }
 
 class _PantallaCodigosState extends State<PantallaCodigos> {
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +37,7 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Align(
-                    alignment: Alignment.topRight,
+                    alignment: Alignment.center,
                     child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.push(
@@ -49,7 +51,7 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
                         color: Colors.white,
                       ),
                       label: const Text(
-                        'Generar QR',
+                        'Añadir Nuevo Salón QR',
                         style: TextStyle(color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -61,16 +63,97 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 80,
+                  StreamBuilder<QuerySnapshot>(
+                    stream: _firebaseFirestore.collection('salones').snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshot.hasError) {
+                        return Text('Error al obtener los datos: ${snapshot.error}');
+                      }
+                      if (!snapshot.hasData) {
+                        return const Text('No hay documentos disponibles');
+                      }
+                      List<QueryDocumentSnapshot> salones = snapshot.data!.docs;
+
+                      return Expanded(
+                        child: ListView.builder(
+                          itemCount: salones.length,
+                          itemBuilder: (context, index) {
+                            Map<String, dynamic> salonData = salones[index].data() as Map<String, dynamic>;
+                            //Datos de la inspección
+                            String salonId  = salones[index].id;
+                            int numeroSalon = salonData['numero'];
+
+                            return Center(
+                              child: Container(
+                                margin: const EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          if (!context.mounted) return;
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => InfoSalon(
+                                                salonNumber: numeroSalon,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start, // Alinea el texto "Salón" hacia arriba
+                                          children: [
+                                            const Icon(Icons.class_, color: Colors.white),
+                                            const SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start, // Alinea el texto "Salón" hacia la izquierda
+                                              children: [
+                                                Text(
+                                                  'Salón '+numeroSalon.toString(),
+                                                  style: const TextStyle(color: Colors.white,fontSize: 20,),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            // Acción a realizar cuando se presione el botón
+                                          },
+                                          icon: const Icon(Icons.delete, color: Colors.black54,),
+                                          iconSize: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+
+                          },
+                        ),
+                      );
+                    },
                   ),
-                  Image.asset(
-                    'assets/images/logos/logoClases.png',
-                    height: 250,
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  ),
+
+/*
                   Expanded(
                     child: ListView.builder(
                       itemCount: salonModel.listaSalones.length,
@@ -112,6 +195,7 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
                       },
                     ),
                   ),
+                  */
                 ],
               ),
             ),

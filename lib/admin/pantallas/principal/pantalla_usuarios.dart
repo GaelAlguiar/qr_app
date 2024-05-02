@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
-import 'package:qr_app/database/usuarios.dart';
-import 'package:qr_app/database/db.dart';
+
 
 class PantallaUsuarios extends StatelessWidget {
   PantallaUsuarios({super.key});
@@ -93,21 +92,6 @@ class PantallaUsuarios extends StatelessWidget {
                   ),
                 ),
 
-
-                ElevatedButton(onPressed: (){
-                  DB.insert
-                    (
-                      Usuario
-                        (
-                         id: 0,
-                          nombre: nombreController.text,
-                          matricula: matriculaController.text,
-                          password: passwordController.text,
-                          email: emailController.text
-                      )
-                  );
-                  //Navigator.push(context, "/");
-                }, child: Text("Agregar Usuario"))
               ],
             ),
           ),

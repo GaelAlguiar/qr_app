@@ -4,6 +4,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qr_app/admin/model/salon_model.dart';
 import 'package:qr_app/admin/styles/pantallas/principal/styles.dart';
 import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PantallaGenerarQr extends StatefulWidget {
   const PantallaGenerarQr({super.key});
@@ -13,12 +14,37 @@ class PantallaGenerarQr extends StatefulWidget {
 }
 
 class _PantallaGenerarQrState extends State<PantallaGenerarQr> {
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final TextEditingController _textoControlador =
       TextEditingController(text: '');
+  int res = 0;
 
   String data = '';
 
   final GlobalKey _qrKey = GlobalKey();
+
+  Future<void> getSalon(numeroSalon) async {
+    try {
+      await _firebaseFirestore.collection("salones").where("numero", isEqualTo: numeroSalon).get().then(
+            (querySnapshot) {
+          print("Successfully completed");
+          if (querySnapshot.docs.isEmpty) {
+            // No se encontraron documentos que cumplan con los criterios de la consulta
+            print("No se encontraron registros para el número de teléfono $numeroSalon");
+            res = 1;
+          }else
+          {
+            res = 2;
+          }
+        },
+        onError: (e) => print("Error completing: $e"),
+      );
+
+    } catch (e) {
+      print("Error obteniendo el documento: $e");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +53,7 @@ class _PantallaGenerarQrState extends State<PantallaGenerarQr> {
 
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Generar QR',
+        title: 'Consultar QR',
       ),
       body: Center(
         child: Container(
@@ -103,7 +129,8 @@ class _PantallaGenerarQrState extends State<PantallaGenerarQr> {
                         onPressed: () {
                           int salonNumber =
                               int.tryParse(_textoControlador.text) ?? 0;
-                          if (salonNumbers.contains(salonNumber)) {
+                          String salonString = salonNumber.toString();
+                          if (salonString.length == 4) {
                             setState(() {
                               data = _textoControlador.text;
                               ScaffoldMessenger.of(context)
@@ -152,6 +179,27 @@ class _PantallaGenerarQrState extends State<PantallaGenerarQr> {
                           int salonNumber =
                               int.tryParse(_textoControlador.text) ?? 0;
                           if (salonNumber != 0) {
+                            getSalon(salonNumber);
+                            if(res ==1)
+                            {
+                              return;
+                            }
+
+                            final data = {
+                              "numero": salonNumber,
+                            };
+
+                            _firebaseFirestore.collection("salones").add(data)
+                                .then((documentReference) {
+                              print("Se añadió correctamente. ID del documento: ${documentReference.id}");
+                              Navigator.pop(context);
+
+                            })
+                                .catchError((error) {
+                              print("Ocurrió un error al añadir el documento: $error");
+                            });
+
+
                             context
                                 .read<SalonModel>()
                                 .addItemToList(salonNumber);
