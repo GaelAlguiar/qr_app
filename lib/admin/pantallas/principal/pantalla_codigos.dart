@@ -6,6 +6,8 @@ import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
 import 'package:qr_app/admin/model/salon_model.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_info_salon.dart';
 
+
+
 class PantallaCodigos extends StatefulWidget {
   const PantallaCodigos({super.key});
 
@@ -135,7 +137,12 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
                                         alignment: Alignment.centerRight,
                                         child: IconButton(
                                           onPressed: () {
-                                            // Acción a realizar cuando se presione el botón
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return ConfirmDialog(deleteNumSalon: numeroSalon,);
+                                              },
+                                            );
                                           },
                                           icon: const Icon(Icons.delete, color: Colors.black54,),
                                           iconSize: 32,
@@ -152,50 +159,6 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
                       );
                     },
                   ),
-
-/*
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: salonModel.listaSalones.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => InfoSalon(
-                                    salonNumber: salonModel.listaSalones[index]
-                                        [0],
-                                  ),
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: salonModel.listaSalones[index]
-                                  [2], // Color del salón
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 40),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.class_, color: Colors.white),
-                                const SizedBox(width: 10),
-                                Text(
-                                  'Salón ${salonModel.listaSalones[index][0]}', // Número del salón
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  */
                 ],
               ),
             ),
@@ -205,3 +168,50 @@ class _PantallaCodigosState extends State<PantallaCodigos> {
     );
   }
 }
+class ConfirmDialog extends StatelessWidget {
+  final int deleteNumSalon;
+
+  const ConfirmDialog({super.key, required this.deleteNumSalon});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Confirmar'),
+      content: Text('¿Estás seguro de que quieres eliminar el salón ${deleteNumSalon}? Se eliminarán todas sus clases'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancelar'),
+        ),
+        TextButton(
+          onPressed: () async {
+            //Eliminiar Detalle
+            final QuerySnapshot snapshot = await FirebaseFirestore.instance
+                .collection('salon_detalle') // Reemplaza 'tu-coleccion' por el nombre de tu colección
+                .where('salon', isEqualTo: deleteNumSalon) // Filtra los documentos donde 'salon' sea igual a 1205
+                .get();
+            for (final doc in snapshot.docs) {
+              await doc.reference.delete();
+            }
+            //Eliminar Salón
+            final QuerySnapshot snapshot2 = await FirebaseFirestore.instance
+                .collection('salones') // Reemplaza 'tu-coleccion' por el nombre de tu colección
+                .where('numero', isEqualTo: deleteNumSalon) // Filtra los documentos donde 'salon' sea igual a 1205
+                .get();
+            for (final doc in snapshot2.docs) {
+              await doc.reference.delete();
+            }
+            Navigator.of(context).pop();
+
+          },
+          child: Text('Confirmar'),
+        ),
+      ],
+    );
+  }
+}
+
+
+

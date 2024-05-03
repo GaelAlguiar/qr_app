@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:qr_app/admin/pantallas/principal/pantalla_admin_usuarios.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_escaneo_qr.dart';
-import 'package:qr_app/admin/pantallas/principal/pantalla_cursos.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_codigos.dart';
 import 'package:qr_app/admin/pantallas/principal/user_info.dart';
 import 'package:qr_app/utils/login_google_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qr_app/global_screens/login.dart';
+import 'package:qr_app/admin/pantallas/principal/pantalla_cursos_profe.dart';
 
 import 'package:qr_app/utils/login_google_utils.dart';
 
@@ -17,28 +18,18 @@ class PantallaMenu extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text("Menú Principal", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
+        title: Text(" Menú Principal", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
         actions: [
           IconButton(
             onPressed: () async {
-              try{
-                await LoginGoogleUtils().singOutWithEmail();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PerfilPage()),
+              );
 
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PantallaLogin(),
-                          ),
-                              (route) => false
-                      );
-
-              }
-              catch (e)
-              {
-                debugPrint("$e");
-              }
             },
-            icon: const Icon(Icons.exit_to_app, color: Colors.white),
+            icon: const Icon(Icons.account_circle, color: Colors.white),
           ),
         ],
       ),
@@ -93,8 +84,34 @@ class PantallaMenu extends StatelessWidget {
                   ),
                 ),
               ),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PantallaCursos(),
+                    ),
+                  );
+                },
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.class_outlined),
+                    SizedBox(width: 10),
+                    Text(
+                      'Mis cursos',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -120,29 +137,26 @@ class PantallaMenu extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PantallaCursos(),
-                    ),
+                        builder: (context) => const PantallaAdminUsr()),
                   );
                 },
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.class_outlined),
+                    Icon(Icons.person),
                     SizedBox(width: 10),
                     Text(
-                      'Mis cursos',
+                      'Usuarios',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: Colors.black,
                       ),
                     ),
                   ],

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_app/admin/pantallas/principal/pantalla_resultados_qr/actualizarTema.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../componentes/Appbar/appbar.dart';
@@ -10,9 +11,10 @@ class horarioSalon extends StatelessWidget {
   final String hora;
   final String maestro;
   final String materia;
+  final String tema;
   final int numSalon;
   horarioSalon({super.key,
-    required this.id, required this.fecha, required this.hora, required this.maestro, required this.materia, required this.numSalon,
+    required this.id, required this.fecha, required this.hora, required this.maestro, required this.materia, required this.numSalon, required this.tema,
   });
 
   @override
@@ -95,6 +97,47 @@ class horarioSalon extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1, // Flex del texto, ajusta según sea necesario
+                        child: Text(
+                          "Tema: " +tema,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,// Tamaño de fuente de 30
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1, // Flex del botón, ajusta según sea necesario
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+
+                            ElevatedButton(
+                              onPressed: () {
+                                if (!context.mounted) return;
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PantallaActualizarTema(
+                                       idDetalle: id,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Icon(Icons.edit_note),
+                            ),
+                          ],
+                        ),
+
+                      ),
+                    ],
+                  ),
+
+
 
 
 

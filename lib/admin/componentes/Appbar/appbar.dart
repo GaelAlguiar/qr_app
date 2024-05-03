@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:qr_app/admin/pantallas/principal/pantalla_menu.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -36,7 +37,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               'assets/images/logos/logoFime.png',
               height: 50,
             ),
-            onPressed: () {},
+            onPressed: () {
+              if (context.mounted)
+              {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PantallaMenu(),
+                    ),
+                        (route) => false
+                );
+              }
+            },
           ),
         ),
       ],

@@ -149,96 +149,96 @@ class _CreateHora extends State<CreateHora>
                   child: ElevatedButton(
 
                     onPressed: (){
-                        if (_titleController.text != "") {
-                          final data = {
+                      if (_titleController.text != "") {
+                        final data = {
+                          "materia": _titleController.text,
+                          "maestro": _selectedMaestro,
+                          "fecha": _selectedFecha,
+                          "hora": _selectedHora,
+                          "salon": widget.numeroSalon
+                        };
+                        if(_selectedFecha == "LMV")
+                        {
+                          final dataL = {
                             "materia": _titleController.text,
                             "maestro": _selectedMaestro,
-                            "fecha": _selectedFecha,
+                            "fecha": "L",
                             "hora": _selectedHora,
                             "salon": widget.numeroSalon
                           };
-                          if(_selectedFecha == "LMV")
-                          {
-                            final dataL = {
-                              "materia": _titleController.text,
-                              "maestro": _selectedMaestro,
-                              "fecha": "L",
-                              "hora": _selectedHora,
-                              "salon": widget.numeroSalon
-                            };
-                            final dataMi = {
-                              "materia": _titleController.text,
-                              "maestro": _selectedMaestro,
-                              "fecha": "Mi",
-                              "hora": _selectedHora,
-                              "salon": widget.numeroSalon
-                            };
-                            final dataV = {
-                              "materia": _titleController.text,
-                              "maestro": _selectedMaestro,
-                              "fecha": "V",
-                              "hora": _selectedHora,
-                              "salon": widget.numeroSalon
-                            };
-                            _firebaseFirestore.collection("salon_detalle").add(dataL)
-                                .then((documentReference) {
-                              print("Se añadió correctamente. ID del documento: ${documentReference.id}");
+                          final dataMi = {
+                            "materia": _titleController.text,
+                            "maestro": _selectedMaestro,
+                            "fecha": "Mi",
+                            "hora": _selectedHora,
+                            "salon": widget.numeroSalon
+                          };
+                          final dataV = {
+                            "materia": _titleController.text,
+                            "maestro": _selectedMaestro,
+                            "fecha": "V",
+                            "hora": _selectedHora,
+                            "salon": widget.numeroSalon
+                          };
+                          _firebaseFirestore.collection("salon_detalle").add(dataL)
+                              .then((documentReference) {
+                            print("Se añadió correctamente. ID del documento: ${documentReference.id}");
 
-                            })
-                                .catchError((error) {
-                              print("Ocurrió un error al añadir el documento: $error");
-                            });
-                            _firebaseFirestore.collection("salon_detalle").add(dataMi)
-                                .then((documentReference) {
-                              print("Se añadió correctamente. ID del documento: ${documentReference.id}");
-                            })
-                                .catchError((error) {
-                              print("Ocurrió un error al añadir el documento: $error");
-                            });
-                            _firebaseFirestore.collection("salon_detalle").add(dataV)
-                                .then((documentReference) {
-                              print("Se añadió correctamente. ID del documento: ${documentReference.id}");
-                              Navigator.pop(context);
-                            })
-                                .catchError((error) {
-                              print("Ocurrió un error al añadir el documento: $error");
-                            });
+                          })
+                              .catchError((error) {
+                            print("Ocurrió un error al añadir el documento: $error");
+                          });
+                          _firebaseFirestore.collection("salon_detalle").add(dataMi)
+                              .then((documentReference) {
+                            print("Se añadió correctamente. ID del documento: ${documentReference.id}");
+                          })
+                              .catchError((error) {
+                            print("Ocurrió un error al añadir el documento: $error");
+                          });
+                          _firebaseFirestore.collection("salon_detalle").add(dataV)
+                              .then((documentReference) {
+                            print("Se añadió correctamente. ID del documento: ${documentReference.id}");
+                            Navigator.pop(context);
+                          })
+                              .catchError((error) {
+                            print("Ocurrió un error al añadir el documento: $error");
+                          });
 
-                          }else{
-                            _firebaseFirestore.collection("salon_detalle").add(data)
-                                .then((documentReference) {
-                              print("Se añadió correctamente. ID del documento: ${documentReference.id}");
-                              Navigator.pop(context);
+                        }else{
+                          _firebaseFirestore.collection("salon_detalle").add(data)
+                              .then((documentReference) {
+                            print("Se añadió correctamente. ID del documento: ${documentReference.id}");
+                            Navigator.pop(context);
 
-                            })
-                                .catchError((error) {
-                              print("Ocurrió un error al añadir el documento: $error");
-                            });
+                          })
+                              .catchError((error) {
+                            print("Ocurrió un error al añadir el documento: $error");
+                          });
 
-                          }
-
-                        }else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(content: Text('Escoge Materia'),
-                              backgroundColor: Color.fromARGB(255, 189, 34, 23),
-                            ));
                         }
-                      },
 
-                      style: ElevatedButton.styleFrom(
+                      }else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(content: Text('Escoge Materia'),
+                          backgroundColor: Color.fromARGB(255, 189, 34, 23),
+                        ));
+                      }
+                    },
+
+                    style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 12.0),
                       backgroundColor: Colors.green,
-                      ),
-                      child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                      Icon(
-                      Icons.add_alarm,
-                      color: Colors.white, // Color del icono blanco
-                      ), // Icono de agregar hora
-                      SizedBox(width: 8.0), // Espacio entre el icono y el texto
-                      Text('Agregar',style: TextStyle(color: Colors.white),), // Texto del botón
-                      ]
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add_alarm,
+                            color: Colors.white, // Color del icono blanco
+                          ), // Icono de agregar hora
+                          SizedBox(width: 8.0), // Espacio entre el icono y el texto
+                          Text('Agregar',style: TextStyle(color: Colors.white),), // Texto del botón
+                        ]
 
                     ),
                   ),
@@ -251,5 +251,4 @@ class _CreateHora extends State<CreateHora>
       ),
     );
   }
-
 }
