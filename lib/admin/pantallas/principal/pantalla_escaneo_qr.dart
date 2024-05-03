@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_app/admin/componentes/Appbar/appbar.dart';
+import 'package:qr_app/admin/pantallas/principal/pantalla_info_salon.dart';
 import 'package:qr_app/admin/pantallas/principal/pantalla_resultados_qr/pantalla_resultados.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -16,6 +17,7 @@ class PantallaEscaneoQrState extends State<PantallaEscaneoQr> {
   bool isCameraActive = false;
   List<Barcode> resultadosEscaneados = [];
   bool mostrarBoton = false;
+  int numSalon = 0;
 
   @override
   void initState() {
@@ -58,8 +60,8 @@ class PantallaEscaneoQrState extends State<PantallaEscaneoQr> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ResultadosScreen(
-                                    resultadosEscaneados: resultadosEscaneados,
+                                  builder: (context) => InfoSalon(
+                                    salonNumber: numSalon,
                                   ),
                                 ),
                               );
@@ -69,7 +71,7 @@ class PantallaEscaneoQrState extends State<PantallaEscaneoQr> {
                                   const Color.fromARGB(255, 147, 210, 164),
                             ),
                             child: const Text(
-                              'Ver resultados',
+                              'Ver Salón',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 12, 136, 12),
                                 fontSize: 16,
@@ -105,6 +107,7 @@ class PantallaEscaneoQrState extends State<PantallaEscaneoQr> {
         resultado = scanData;
         resultadosEscaneados.add(resultado);
         mostrarBoton = true;
+        numSalon = int.tryParse(resultado.code!)!;
       });
     });
     if (!isCameraActive) {
